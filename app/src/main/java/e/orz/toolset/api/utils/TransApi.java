@@ -1,4 +1,4 @@
-package e.orz.toolset.utils;
+package e.orz.toolset.api.utils;
 
 import java.util.HashMap;
 import java.util.Map;

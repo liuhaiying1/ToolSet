@@ -1,4 +1,4 @@
-package e.orz.toolset.utils;
+package e.orz.toolset.api.utils;
 
 import java.io.*;
 import java.security.MessageDigest;

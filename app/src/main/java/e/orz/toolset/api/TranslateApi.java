@@ -1,22 +1,41 @@
 package e.orz.toolset.api;
 
-import e.orz.toolset.utils.TransApi;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
-public class TranslateApi implements Runnable{
+import e.orz.toolset.api.utils.TransApi;
+
+public class TranslateApi{
 
     private static final String APP_ID = "20180606000172906";
     private static final String SECURITY_KEY = "1j6qwP4iY69JeUk5eiME";
+    private static TransApi api = new TransApi(APP_ID, SECURITY_KEY);
+    private static String result;
 
-    public static void main(String[] args) {
-        TransApi api = new TransApi(APP_ID, SECURITY_KEY);
+    public static String execute(final String to, final String text){
+        Thread thread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                result = api.getTransResult(text, "auto", to);
+            }
+        });
+        thread.start();
+        try{
+            thread.join();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        String s = null;
+        try {
+            JSONObject jsonObject = new JSONObject(result);
+            JSONArray jsonArray = (JSONArray)jsonObject.get("trans_result");
+            JSONObject jsonObject1 = (JSONObject) jsonArray.get(0);
+            s = jsonObject1.getString("dst");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return s;
+    }
 
-        String query = "高度600米";
-        System.out.println(api.getTransResult(query, "auto", "en"));
-    }
-    @Override
-    public void run() {
-        TransApi api = new TransApi(APP_ID, SECURITY_KEY);
-        String query = "高度600米";
-        System.out.println(api.getTransResult(query, "auto", "en"));
-    }
 }

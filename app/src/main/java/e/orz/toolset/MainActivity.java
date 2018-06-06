@@ -18,11 +18,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        new Thread(new ExpressApi2()).start();
-        new Thread(new CurrencyApi()).start();
-        new Thread(new IDApi()).start();
-        new Thread(new PhoneNumApi()).start();
-        new Thread(new PhotoTextApi()).start();
-        new Thread(new TranslateApi()).start();
+        String s = TranslateApi.execute("en", "我是谁我在哪");
+        System.out.println(s);
     }
 }
