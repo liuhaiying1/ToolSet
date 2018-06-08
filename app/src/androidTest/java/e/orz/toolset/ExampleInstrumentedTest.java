@@ -18,7 +18,7 @@ import static org.junit.Assert.*;
 public class ExampleInstrumentedTest {
     @Test
     public void useAppContext() throws Exception {
-        // Context of the app under test.
+        // ExpContext of the app under test.
         Context appContext = InstrumentationRegistry.getTargetContext();
 
         assertEquals("e.orz.toolset", appContext.getPackageName());

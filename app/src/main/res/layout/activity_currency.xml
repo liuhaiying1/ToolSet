@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="20dp"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <Button
+        android:id="@+id/returnButton"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:background="@drawable/back"
+        />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:orientation="horizontal"
+        >
+
+        <TextView
+            android:textSize="15dp"
+            android:layout_width="70dp"
+            android:layout_height="wrap_content"
+            android:text=" 货币金额:"
+
+            />
+        <EditText
+            android:inputType="numberDecimal"
+            android:layout_width="200dp"
+            android:layout_height="50dp"
+            android:background="@android:drawable/alert_light_frame"
+            android:id="@+id/editText1"
+
+            />
+        <TextView
+            android:textSize="15dp"
+            android:layout_width="105dp"
+            android:layout_height="wrap_content"
+            android:text="   元（人民币）"
+
+            />
+
+    </LinearLayout>
+
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp">
+
+        <TextView
+            android:textSize="15dp"
+            android:layout_width="70dp"
+            android:layout_height="wrap_content"
+            android:text=" 换  算  为:"
+            />
+        <EditText
+            android:layout_width="200dp"
+            android:layout_height="50dp"
+            android:focusable="false"
+            android:id="@+id/editText2"
+            android:background="@android:drawable/alert_light_frame"/>
+        <Spinner
+            android:id="@+id/spinner"
+            android:layout_marginTop="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:spinnerMode="dropdown"
+            android:entries="@array/currencies">
+            ></Spinner>
+
+    </LinearLayout>
+
+
+    <Button
+        android:layout_marginTop="20dp"
+        android:id="@+id/button1"
+        android:textSize="15dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:layout_gravity="center"
+        android:text="换算"/>
+
+</LinearLayout>

@@ -1,18 +1,161 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+<LinearLayout
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context="e.orz.toolset.MainActivity">
+    android:layout_height="wrap_content"
+    android:gravity="start"
+    android:orientation="vertical"
+    xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <TextView
-        android:layout_width="wrap_content"
+    <RelativeLayout
+        android:layout_width="300dp"
         android:layout_height="wrap_content"
-        android:text="Hello World!"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:padding="10dp">
+        <!--翻译-->
+        <ImageView
+            android:id="@+id/image1"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_centerHorizontal="true"
+            android:src="@drawable/pic"
+            android:background="@drawable/imageshape"
+            />
 
-</android.support.constraint.ConstraintLayout>
+        <TextView
+            android:id="@+id/mTextView01"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@id/image1"
+            android:layout_marginLeft="50dp"
+            android:text="翻译"
+            />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:padding="10dp">
+        <!--提取文字-->
+        <ImageView
+            android:id="@+id/image2"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_centerInParent="true"
+            android:src="@drawable/pic1"
+            android:background="@drawable/imageshape"
+            />
+
+        <TextView
+            android:id="@+id/mTextView02"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@id/image2"
+            android:layout_marginLeft="50dp"
+            android:text="提取文字"
+         />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:padding="10dp">
+        <!--身份证-->
+        <ImageView
+            android:id="@+id/image3"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_centerInParent="true"
+            android:src="@drawable/pic2"
+            android:background="@drawable/imageshape"
+            />
+
+        <TextView
+            android:id="@+id/mTextView03"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@id/image3"
+            android:layout_marginLeft="50dp"
+            android:text="身份证信息查询" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:padding="10dp">
+    <!--货币-->
+    <ImageView
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:src="@drawable/pic3"
+        android:layout_centerInParent="true"
+        android:id="@+id/image4"
+        android:background="@drawable/imageshape"
+        />
+        <TextView
+            android:id="@+id/mTextView04"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@id/image4"
+            android:layout_marginLeft="50dp"
+            android:text="货币汇率查询"
+            />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:padding="10dp">
+    <!--快递-->
+    <ImageView
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:src="@drawable/pic4"
+        android:layout_centerInParent="true"
+        android:id="@+id/image5"
+        android:background="@drawable/imageshape"
+        />
+     <TextView
+         android:id="@+id/mTextView05"
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+         android:layout_centerVertical="true"
+         android:layout_toRightOf="@id/image5"
+         android:layout_marginLeft="50dp"
+         android:text="快递查询"
+            />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:gravity="right"
+        android:padding="10dp">
+    <!--手机-->
+    <ImageView
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:src="@drawable/pic5"
+        android:layout_centerInParent="true"
+        android:id="@+id/image6"
+        android:background="@drawable/imageshape"
+        />
+        <TextView
+            android:id="@+id/mTextView06"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@id/image6"
+            android:layout_marginLeft="50dp"
+            android:text="手机号归属地查询"
+            />
+    </RelativeLayout>
+</LinearLayout>
+
+
+
+
+
+

@@ -29,8 +29,8 @@ public class TranslateApi{
         String s = null;
         try {
             JSONObject jsonObject = new JSONObject(result);
-            JSONArray jsonArray = (JSONArray)jsonObject.get("trans_result");
-            JSONObject jsonObject1 = (JSONObject) jsonArray.get(0);
+            JSONArray jsonArray = jsonObject.getJSONArray("trans_result");
+            JSONObject jsonObject1 =jsonArray.getJSONObject(0);
             s = jsonObject1.getString("dst");
         } catch (JSONException e) {
             e.printStackTrace();

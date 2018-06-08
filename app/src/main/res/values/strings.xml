@@ -1,3 +1,10 @@
 <resources>
     <string name="app_name">ToolSet</string>
+    <string name="title_activity_identity">identityActivity</string>
+    <string name="title_activity_currency">currencyActivity</string>
+    <string name="title_activity_fastmail">fastmailActivity</string>
+    <string name="title_activity_phone">phoneActivity</string>
+
+    <string name="bu_ok">查询</string>
+
 </resources>

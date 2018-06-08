@@ -1,5 +1,6 @@
 package e.orz.toolset.api;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.*;
@@ -10,21 +11,49 @@ import java.util.HashMap;
 import java.util.Map;
 
 // https://www.juhe.cn/docs/api/id/11
-public class PhoneNumApi implements Runnable{
-    public static final String DEF_CHATSET = "UTF-8";
-    public static final int DEF_CONN_TIMEOUT = 30000;
-    public static final int DEF_READ_TIMEOUT = 30000;
-    public static String userAgent =  "Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/29.0.1547.66 Safari/537.36";
+public class PhoneNumApi{
+    private static final String DEF_CHATSET = "UTF-8";
+    private static final int DEF_CONN_TIMEOUT = 30000;
+    private static final int DEF_READ_TIMEOUT = 30000;
+    private static String userAgent =  "Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/29.0.1547.66 Safari/537.36";
 
+    private static String result;
     //配置您申请的KEY
-    public static final String APPKEY ="68f4e33a88c83e5cdbdf66a5171de35d";
+    private static final String APPKEY ="68f4e33a88c83e5cdbdf66a5171de35d";
 
-    //1.手机归属地查询
-    public static void getRequest1(){
+    public static String execute(final String phoneNo){
+        Thread thread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                result = getRequest1(phoneNo);
+            }
+        });
+        thread.start();
+        try{
+            thread.join();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        try {
+            JSONObject jsonObject1 = new JSONObject(result);
+            String province = jsonObject1.getString("province");
+            String city = jsonObject1.getString("city");
+            String company = jsonObject1.getString("company");
+            result = province+" "+city+" "+company;
+        } catch (Exception e) {
+            return null;
+        }
+
+        return result;
+    }
+
+
+    private static String getRequest1(String phoneNo){
         String result =null;
+        String result2 = null;
         String url ="http://apis.juhe.cn/mobile/get";//请求接口地址
         Map params = new HashMap();//请求参数
-        params.put("phone","18652030106");//需要查询的手机号码或手机号码前7位
+        params.put("phone",phoneNo);//需要查询的手机号码或手机号码前7位
         params.put("key",APPKEY);//应用APPKEY(应用详细页查询)
         params.put("dtype","json");//返回数据的格式,xml或json，默认json
 
@@ -32,6 +61,7 @@ public class PhoneNumApi implements Runnable{
             result =net(url, params, "GET");
             JSONObject object = new JSONObject(result);
             if(object.getInt("error_code")==0){
+                result2 = object.get("result").toString();
                 System.out.println(object.get("result"));
             }else{
                 System.out.println(object.get("error_code")+":"+object.get("reason"));
@@ -39,23 +69,11 @@ public class PhoneNumApi implements Runnable{
         } catch (Exception e) {
             e.printStackTrace();
         }
+        return result2;
     }
 
 
-
-    public static void main(String[] args) {
-        getRequest1();
-    }
-
-    /**
-     *
-     * @param strUrl 请求地址
-     * @param params 请求参数
-     * @param method 请求方法
-     * @return  网络请求字符串
-     * @throws Exception
-     */
-    public static String net(String strUrl, Map params,String method) throws Exception {
+    private static String net(String strUrl, Map params,String method) throws Exception {
         HttpURLConnection conn = null;
         BufferedReader reader = null;
         String rs = null;
@@ -109,7 +127,7 @@ public class PhoneNumApi implements Runnable{
     }
 
     //将map型转为请求参数型
-    public static String urlencode(Map<String,String> data) {
+    private static String urlencode(Map<String,String> data) {
         StringBuilder sb = new StringBuilder();
         for (Map.Entry i : data.entrySet()) {
             try {
@@ -121,8 +139,4 @@ public class PhoneNumApi implements Runnable{
         return sb.toString();
     }
 
-    @Override
-    public void run() {
-        getRequest1();
-    }
 }

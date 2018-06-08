@@ -1,5 +1,7 @@
 package e.orz.toolset.api;
 // https://www.juhe.cn/docs/api/id/23
+import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
@@ -11,30 +13,61 @@ import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
+import java.text.DecimalFormat;
 import java.util.HashMap;
 import java.util.Map;
 
-public class CurrencyApi implements Runnable{
-    public static final String DEF_CHATSET = "UTF-8";
-    public static final int DEF_CONN_TIMEOUT = 30000;
-    public static final int DEF_READ_TIMEOUT = 30000;
-    public static String userAgent =  "Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/29.0.1547.66 Safari/537.36";
+public class CurrencyApi{
+    private static final String DEF_CHATSET = "UTF-8";
+    private static final int DEF_CONN_TIMEOUT = 30000;
+    private static final int DEF_READ_TIMEOUT = 30000;
+    private static String userAgent =  "Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/29.0.1547.66 Safari/537.36";
+    private static String result;
 
     //配置您申请的KEY
-    public static final String APPKEY ="a1c1c66dc4be45131093c35b951efb6f";
+    private static final String APPKEY ="a1c1c66dc4be45131093c35b951efb6f";
+
+    public static double execute(String name, double money){
+        double xxxx = 0;
+        Thread thread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                result = getRequest1();
+            }
+        });
+        thread.start();
+        try{
+            thread.join();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        try {
+            JSONArray jsonArray = new JSONArray(result);
+            JSONObject jsonObject1 = jsonArray.getJSONObject(0);
+            double x = Double.parseDouble(jsonObject1.getJSONObject(name).getString("bankConversionPri"));
+            xxxx = money*(100/x);
+            System.out.println(jsonObject1.getJSONObject("美元").getString("bankConversionPri"));
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        DecimalFormat df=new DecimalFormat("#.00");
+        return Double.parseDouble(df.format(xxxx));
+    }
 
     //1.人民币牌价
-    public static void getRequest1(){
+    private static String getRequest1(){
         String result =null;
         String url ="http://web.juhe.cn:8080/finance/exchange/rmbquot";//请求接口地址
         Map params = new HashMap();//请求参数
         params.put("key",APPKEY);//APP Key
-        params.put("type","");//两种格式(0或者1,默认为0)
+        params.put("type",1);//两种格式(0或者1,默认为0)
 
         try {
             result =net(url, params, "GET");
             JSONObject object = new JSONObject(result);
             if(object.getInt("error_code")==0){
+                result = object.get("result").toString();
                 System.out.println(object.get("result"));
             }else{
                 System.out.println(object.get("error_code")+":"+object.get("reason"));
@@ -42,6 +75,7 @@ public class CurrencyApi implements Runnable{
         } catch (Exception e) {
             e.printStackTrace();
         }
+        return result;
     }
 
     //2.外汇汇率
@@ -50,7 +84,7 @@ public class CurrencyApi implements Runnable{
         String url ="http://web.juhe.cn:8080/finance/exchange/frate";//请求接口地址
         Map params = new HashMap();//请求参数
         params.put("key",APPKEY);//APP Key
-        params.put("type","");//两种格式(0或者1,默认为0)
+        params.put("type",1);//两种格式(0或者1,默认为0)
 
         try {
             result =net(url, params, "GET");
@@ -67,20 +101,7 @@ public class CurrencyApi implements Runnable{
 
 
 
-    public static void main(String[] args) {
-        getRequest1();
-        getRequest2();
-    }
-
-    /**
-     *
-     * @param strUrl 请求地址
-     * @param params 请求参数
-     * @param method 请求方法
-     * @return  网络请求字符串
-     * @throws Exception
-     */
-    public static String net(String strUrl, Map params,String method) throws Exception {
+    private static String net(String strUrl, Map params,String method) throws Exception {
         HttpURLConnection conn = null;
         BufferedReader reader = null;
         String rs = null;
@@ -144,9 +165,4 @@ public class CurrencyApi implements Runnable{
         return sb.toString();
     }
 
-    @Override
-    public void run() {
-        getRequest1();
-        getRequest2();
-    }
 }
